@@ -26,93 +26,20 @@ export class AuthComponent {
 
   login() {
     return this.http.post('http://localhost:3000/auth/login', this.loginObj).subscribe((res:any)=>{
-      alert('Login success')
       this.authService.storeJwtToken(res.token)
-      alert(localStorage.getItem("JWT_TOKEN"))
-      this.router.navigate(['/message'])
+      this.router.navigate(['/chat'])
+    }, error => {
+      alert('Login error')
     })
   }
 
   register() {
     return this.http.post('http://localhost:3000/user', this.loginObj).subscribe((res:any)=>{
-      alert('Login success')
       this.authService.storeJwtToken(res.token)
-      alert(localStorage.getItem("JWT_TOKEN"))
       this.router.navigate(['/message'])
+  }, error => {
+    alert('Register error')
   })
 }
 
-  /*username = ''
-  password = ''
-  authService = inject(AuthService)
-  router = inject(Router)
-
-  login(event: Event) {
-    event.preventDefault()
-    console.log(`Login:${this.username} / ${this.password}`)
-    this.authService.login({
-        username: this.username,
-        password: this.password
-      }).subscribe(() => {
-        alert('login success')
-        this.router.navigate(['/message'])
-      })
-  }
-
-
-
-
-
- /* loginForm: FormGroup;
-  registerForm: FormGroup;
-  isRegistering = false;
-
-  constructor( 
-    private fb: FormBuilder,
-    private router: Router,
-    private authService: AuthService,
-  ) {
-    this.loginForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
-    })
-
-    this.registerForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
-    })
-  }
-
-  login() {
-    if (this.loginForm.valid) {
-      const { username, password } = this.loginForm.value
-      this.authService.login(username, password).subscribe(
-        (response) => {
-          this.authService.storeJwtToken(response.token);  
-          this.router.navigate(['/message']);
-        },
-        (error) => {
-          console.error(error)
-        }
-      );
-    }
-  }
-
-  register() {
-    if (this.registerForm.valid) {
-      const { username, password } = this.registerForm.value
-      this.authService.register(username, password).subscribe(
-        (response) => {
-          this.authService.storeToken(response.token);  
-          this.router.navigate(['/message']);
-        },
-        (error) => {
-          console.error(error)
-        }
-      );
-    }
-  }
-  toggleRegistration() {  
-    this.isRegistering = !this.isRegistering;  
-  } */
 }

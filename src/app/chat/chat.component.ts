@@ -1,28 +1,49 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
+import { Component, OnInit } from '@angular/core';
 import { ChatService, Message } from './chat.service'
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, CommonModule],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css'
 })
 export class ChatComponent implements OnInit {
   messages: Message[] = [];
-  newMessage = '';
+  newMessageText: string = '';
 
   constructor(private chatService: ChatService) {}
 
-  ngOnInit() {
-    this.chatService.getMessages().subscribe(messages => {
-      this.messages = messages;
-    });
+  ngOnInit(): void {
+    this.loadMessages()
+  }
 
-    this.chatService.sendMessage(this.newMessage).subscribe(() => {
-      this.newMessage = '';
+  loadMessages(): void {
+    this.chatService.getMessages().subscribe(messages => {
+      this.messages = messages
     })
+  }
+
+  sendMessage(): void {
+    if (!this.newMessageText.trim()) {  
+      return;
+    }
     
+    const newMessage: Message = {
+      id: Math.random(),
+      username: '',
+      content: this.newMessageText,
+      createdAt: new Date()
+    }
+
+    this.chatService.sendMessage(newMessage).subscribe(message => {
+      this.messages.push(message)
+      this.newMessageText = ''
+    },
+    error => {  
+      console.error('Ошибка при отправке сообщения', error);  
+    })
   }
 }
