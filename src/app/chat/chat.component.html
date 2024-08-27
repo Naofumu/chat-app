@@ -4,7 +4,7 @@
         <h2>Добро пожаловать в чат!</h2>  
         <div class="messages">  
           <div *ngFor="let message of messages" class="message">  
-            <strong>{{ message.username }}</strong>: {{ message.content }} <em class="date">{{ message.createdAt | date:'short' }}</em>  
+            <strong>{{ message.user.username}}</strong>: {{ message.content }} <em class="date">{{ message.createdAt | date:'short' }}</em>  
           </div>  
         </div>  
         <div class="input-area">  

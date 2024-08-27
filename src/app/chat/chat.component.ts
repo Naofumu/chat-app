@@ -13,10 +13,8 @@ import { CommonModule } from '@angular/common';
 export class ChatComponent implements OnInit {
   messages: Message[] = [];
   newMessageText: string = '';
-  username: string;
 
   constructor(private chatService: ChatService) {
-    this.username = localStorage.getItem('username') || 'Гость';
   }
 
   ngOnInit(): void {
@@ -32,7 +30,10 @@ export class ChatComponent implements OnInit {
   sendMessage(): void {
     
     const newMessage: Message = {
-      username: 'test',
+      user: {
+        id: 123,
+        username: localStorage.getItem('username') || 'Гость'
+      },
       content: this.newMessageText,
       createdAt: new Date()
     }

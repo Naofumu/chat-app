@@ -4,9 +4,12 @@ import { Observable } from "rxjs";
 import { AuthService } from "../auth/auth.service";
 
 export interface Message {
-  username: string;
   content: string;
   createdAt: Date;
+  user: {  
+    id: number;  
+    username: string;  
+  };
 }
 
 @Injectable({ providedIn: 'root' })
