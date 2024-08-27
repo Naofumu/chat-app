@@ -4,20 +4,14 @@ import { Observable } from "rxjs";
 import { AuthService } from "../auth/auth.service";
 
 export interface Message {
-  id: number;
   username: string;
   content: string;
   createdAt: Date;
 }
 
-interface Credentials {
-    username: string;
-    password: string;
-  }
-
 @Injectable({ providedIn: 'root' })
 export class ChatService {
-    private baseUrl = 'http://localhost:3000'
+    private baseUrl = 'http://localhost:3000/message'
 
     constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -33,6 +27,6 @@ export class ChatService {
         return this.http.get<Message[]>(this.baseUrl, { headers: this.getHeaders()})
       }
     sendMessage(message: Message): Observable<Message> {
-      return this.http.post<Message>(this.baseUrl, { headers: this.getHeaders()})
+      return this.http.post<Message>(this.baseUrl, message, { headers: this.getHeaders()})
       }
 }

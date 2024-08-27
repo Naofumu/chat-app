@@ -53,3 +53,7 @@
   .input-area button:hover {  
     background-color: #4cae4c; 
   }
+
+  .date {
+    font-size: 12px;
+  }

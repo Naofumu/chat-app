@@ -22,6 +22,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem(this.JWT_TOKEN)
+    localStorage.removeItem('username')
   }
 
   

@@ -27,6 +27,7 @@ export class AuthComponent {
   login() {
     return this.http.post('http://localhost:3000/auth/login', this.loginObj).subscribe((res:any)=>{
       this.authService.storeJwtToken(res.token)
+      localStorage.setItem('username', this.loginObj.username)
       this.router.navigate(['/chat'])
     }, error => {
       alert('Login error')
@@ -36,6 +37,7 @@ export class AuthComponent {
   register() {
     return this.http.post('http://localhost:3000/user', this.loginObj).subscribe((res:any)=>{
       this.authService.storeJwtToken(res.token)
+      localStorage.setItem('username', this.loginObj.username)
       this.router.navigate(['/message'])
   }, error => {
     alert('Register error')
